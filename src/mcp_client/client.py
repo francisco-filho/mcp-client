@@ -11,7 +11,7 @@ class MCPClient:
         # Initialize session and client objects
         self.session: Optional[ClientSession] = None
         self.exit_stack = AsyncExitStack()
-    # methods will go here
+        # methods will go here
 
 
     async def connect_to_server(self, server_script_path: str):
@@ -48,9 +48,11 @@ class MCPClient:
         tools = [{
             "name": tool.name,
             "description": tool.description,
-            "schema": tool.inputSchema
+            "schema": tool.inputSchema,
         } for tool in response.tools]
         for to in tools:
+            print(to)
+        for to in response.tools:
             print(to)
 
     async def call_tool(self, name: str, options):
@@ -72,7 +74,7 @@ async def main():
         await client.describe_tools()
         resp = await client.call_tool("get_alerts", {"state": "NY"})
         #for r in resp:
-        print(resp.content[0].text)
+        #print(resp.content[0].text)
         print(type(resp.content))
     finally:
         await client.cleanup()
